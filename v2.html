@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chalerm — Members Supper Club</title>
+<style>
+  :root {
+    --ink: #0d0f14;
+    --paper: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --midnight: #111827;
+    --slate: #6b7280;
+    --rule: rgba(201,168,76,0.3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--ink);
+    color: var(--paper);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(13,15,20,0.85) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  .nav-cta {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 0.55rem 1.4rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5rem 3rem 5rem 3rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-rule {
+    width: 3rem;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.65);
+    max-width: 28rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-seats {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--rule);
+    padding: 0.6rem 1rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    transition: all 0.25s;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: transparent;
+    padding: 0.9rem 2rem;
+    text-decoration: none;
+    border: 1px solid var(--gold);
+    transition: all 0.25s;
+  }
+
+  .btn-outline:hover {
+    background: rgba(201,168,76,0.1);
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--ink) 0%, transparent 30%);
+  }
+
+  .hero-issue {
+    position: absolute;
+    bottom: 3rem;
+    right: 2rem;
+    z-index: 3;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    writing-mode: vertical-rl;
+  }
+
+  /* ─── TICKER ─── */
+  .ticker {
+    background: var(--gold);
+    overflow: hidden;
+    padding: 0.75rem 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 20s linear infinite;
+    gap: 0;
+  }
+
+  .ticker-item {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 0 2.5rem;
+    font-weight: bold;
+  }
+
+  .ticker-dot {
+    color: rgba(13,15,20,0.4);
+    padding: 0 0.5rem;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ─── PHILOSOPHY ─── */
+  .philosophy {
+    padding: 7rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: 4rem;
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .philosophy-divider {
+    background: var(--rule);
+    height: 100%;
+    min-height: 200px;
+  }
+
+  .section-number {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-heading {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .body-text {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.6);
+    margin-bottom: 1.5rem;
+  }
+
+  .pull-quote {
+    border-left: 2px solid var(--gold);
+    padding-left: 1.5rem;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--paper);
+    margin: 2rem 0;
+  }
+
+  /* ─── EXPERIENCE GRID ─── */
+  .experience {
+    padding: 7rem 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .experience-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .exp-card {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--rule);
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .exp-card:last-child { border-right: none; }
+
+  .exp-card:hover {
+    background: rgba(201,168,76,0.04);
+  }
+
+  .exp-num {
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: var(--rule);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .exp-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: rgba(245,240,232,0.55);
+  }
+
+  /* ─── PHOTO FEATURE ─── */
+  .photo-feature {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    min-height: 70vh;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .photo-feature-img {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-feature-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.7);
+  }
+
+  .photo-feature-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--ink));
+  }
+
+  .photo-feature-content {
+    padding: 5rem 3rem 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--midnight);
+  }
+
+  .photo-caption {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .menu-list {
+    list-style: none;
+    margin: 2rem 0;
+  }
+
+  .menu-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .menu-list li:first-child {
+    border-top: 1px solid var(--rule);
+  }
+
+  .menu-item-name {
+    font-size: 0.9rem;
+    color: var(--paper);
+  }
+
+  .menu-item-sub {
+    font-size: 0.75rem;
+    color: rgba(245,240,232,0.4);
+    font-style: italic;
+    margin-top: 0.2rem;
+  }
+
+  .menu-item-course {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ─── SEAT COUNT ─── */
+  .seat-section {
+    padding: 7rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .seat-bg-num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30vw;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(201,168,76,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .seat-section .section-number {
+    margin-bottom: 1.5rem;
+  }
+
+  .seat-heading {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .seat-subtext {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.55);
+    max-width: 36rem;
+    margin: 0 auto 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .seats-visual {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .seat-dot {
+    width: 12px;
+    height: 12px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    border-radius: 50%;
+    transition: all 0.3s;
+  }
+
+  .seat-dot.filled {
+    background: var(--gold);
+  }
+
+  /* ─── APPLICATION ─── */
+  .application {
+    padding: 7rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    padding: 0.75rem 0;
+    font-size: 0.95rem;
+    color: var(--paper);
+    font-family: 'Georgia', serif;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .form-input::placeholder { color: rgba(245,240,232,0.3); }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-bottom-color: var(--gold);
+  }
+
+  .form-select option {
+    background: var(--midnight);
+    color: var(--paper);
+  }
+
+  .form-textarea {
+    resize: none;
+    min-height: 5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: rgba(245,240,232,0.35);
+    margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .application-aside {
+    padding-top: 1rem;
+  }
+
+  .aside-block {
+    padding: 2.5rem;
+    border: 1px solid var(--rule);
+    margin-bottom: 1.5rem;
+  }
+
+  .aside-block-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .aside-block-val {
+    font-size: 2rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--paper);
+    margin-bottom: 0.5rem;
+  }
+
+  .aside-block-sub {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.5);
+    line-height: 1.5;
+  }
+
+  .aside-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.5);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-brand {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(245,240,232,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13,15,20,0.9);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--midnight);
+    border: 1px solid var(--rule);
+    padding: 3rem;
+    max-width: 480px;
+    width: 90%;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.open .modal {
+    transform: translateY(0);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(245,240,232,0.5);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--gold); }
+
+  .modal-title {
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-sub {
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 2rem;
+  }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .success-msg .checkmark {
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .success-msg p {
+    font-size: 0.95rem;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.6;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 7rem 2rem 4rem; }
+
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+
+    .philosophy { grid-template-columns: 1fr; gap: 2rem; }
+    .philosophy-divider { display: none; }
+
+    .experience-grid { grid-template-columns: 1fr; }
+    .exp-card { border-right: none; border-bottom: 1px solid var(--rule); }
+
+    .photo-feature { grid-template-columns: 1fr; grid-template-rows: 40vh auto; }
+    .photo-feature-img::after { background: linear-gradient(to bottom, transparent 60%, var(--ink)); }
+
+    .application { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { justify-content: center; }
+
+    .experience, .philosophy, .seat-section, .application {
+      padding: 5rem 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Chalerm</div>
+  <ul class="nav-links">
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#experience">The Evening</a></li>
+    <li><a href="#apply">Apply</a></li>
+  </ul>
+  <a href="#apply" class="nav-cta">Request Invitation</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Bangkok · Private Dining · Est. 2024</div>
+    <h1 class="hero-title">
+      Where eight<br>
+      strangers share<br>
+      one <em>table.</em>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-body">
+      Chalerm is a members-only Thai supper club convened around
+      a single table. Eight seats. No menu. No second chances.
+      Only the moment, the dish, and the company.
+    </p>
+    <div class="hero-meta">
+      <a href="#apply" class="btn-primary">Request Membership</a>
+      <div class="hero-seats">8 Seats Only</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=900&q=80&fit=crop"
+         alt="Thai dining atmosphere" loading="eager" />
+  </div>
+  <div class="hero-issue">Membership · 2024–2025 Season</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item">Members Only <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Eight Seats <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">One Table <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Thai Cuisine <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Private Dining <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">No Menu <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Seasonal Ingredients <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">By Invitation <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Members Only <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Eight Seats <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">One Table <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Thai Cuisine <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Private Dining <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">No Menu <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">Seasonal Ingredients <span class="ticker-dot">◆</span></span>
+    <span class="ticker-item">By Invitation <span class="ticker-dot">◆</span></span>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="fade-in">
+    <div class="section-number">01 — Philosophy</div>
+    <h2 class="section-heading">
+      The art of<br><em>gathering.</em>
+    </h2>
+    <p class="body-text">
+      Chalerm — meaning "to celebrate" in Thai — was born from a single
+      conviction: that the finest meals are not found in restaurants, but in rooms
+      where everyone arrived as strangers and left as something more.
+    </p>
+    <p class="body-text">
+      Each session is choreographed around the rhythms of Thai culinary
+      tradition. We work with a single featured chef and source ingredients
+      no more than 72 hours before service.
+    </p>
+    <a href="#apply" class="btn-outline">Learn More</a>
+  </div>
+  <div class="philosophy-divider"></div>
+  <div class="fade-in" style="transition-delay: 0.15s">
+    <blockquote class="pull-quote">
+      "Aaharn — food — is not merely sustenance. In Thai culture it is
+      the architecture of belonging."
+    </blockquote>
+    <p class="body-text">
+      Our approach draws from the regional diversity of Thai cooking:
+      the fiery depth of Isan, the delicate coconut broths of the south,
+      the herbal complexity of the north. Each evening explores one
+      tradition in full, across eight courses.
+    </p>
+    <div style="margin-top: 2rem;">
+      <img src="https://picsum.photos/seed/thaikitchen/600/280"
+           alt="Kitchen preparation"
+           style="width:100%;height:200px;object-fit:cover;filter:saturate(0.6);" />
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE GRID -->
+<section class="experience" id="experience">
+  <div class="experience-header">
+    <div>
+      <div class="section-number">02 — The Evening</div>
+      <h2 class="section-heading" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem);">
+        Eight courses.<br><em>One story.</em>
+      </h2>
+    </div>
+    <p style="font-size:0.9rem; color:rgba(245,240,232,0.45); max-width:24rem; line-height:1.6;">
+      Every Chalerm evening unfolds as a progression — from welcome drink
+      through final digestif — each course building on the last.
+    </p>
+  </div>
+  <div class="experience-grid">
+    <div class="exp-card fade-in">
+      <div class="exp-num">I</div>
+      <div class="exp-title">Welcome</div>
+      <p class="exp-desc">Arrive to cold-pressed sugarcane juice and roasted rice crackers, while the kitchen makes its final preparations.</p>
+    </div>
+    <div class="exp-card fade-in" style="transition-delay: 0.1s">
+      <div class="exp-num">II</div>
+      <div class="exp-title">Introduction</div>
+      <p class="exp-desc">The evening's chef addresses the table, sharing the provenance of each key ingredient and the regional tradition being explored.</p>
+    </div>
+    <div class="exp-card fade-in" style="transition-delay: 0.2s">
+      <div class="exp-num">III–VII</div>
+      <div class="exp-title">The Progression</div>
+      <p class="exp-desc">Five courses served family-style across the table, each course accompanied by a brief moment of context from the chef.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO FEATURE -->
+<section class="photo-feature">
+  <div class="photo-feature-img">
+    <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=900&q=80&fit=crop"
+         alt="Thai spices and herbs" />
+  </div>
+  <div class="photo-feature-content">
+    <div class="photo-caption">A recent evening — Northern Thai</div>
+    <h3 style="font-size:1.6rem; font-weight:400; line-height:1.2; margin-bottom:1rem;">
+      Sample Menu<br><em style="color:var(--gold)">Chiang Mai, October</em>
+    </h3>
+    <ul class="menu-list">
+      <li>
+        <div>
+          <div class="menu-item-name">Khao Soi Gai</div>
+          <div class="menu-item-sub">slow-braised leg, crispy noodle</div>
+        </div>
+        <span class="menu-item-course">IV</span>
+      </li>
+      <li>
+        <div>
+          <div class="menu-item-name">Sai Ua</div>
+          <div class="menu-item-sub">Chiang Mai sausage, lemongrass</div>
+        </div>
+        <span class="menu-item-course">V</span>
+      </li>
+      <li>
+        <div>
+          <div class="menu-item-name">Gaeng Hang Lay</div>
+          <div class="menu-item-sub">pork belly, ginger, tamarind</div>
+        </div>
+        <span class="menu-item-course">VI</span>
+      </li>
+      <li>
+        <div>
+          <div class="menu-item-name">Khao Niew Mamuang</div>
+          <div class="menu-item-sub">mango sticky rice, coconut cream</div>
+        </div>
+        <span class="menu-item-course">VIII</span>
+      </li>
+    </ul>
+    <p style="font-size:0.8rem; color:rgba(245,240,232,0.35); font-style:italic;">
+      Menus change with each session and are never repeated.
+    </p>
+  </div>
+</section>
+
+<!-- SEATS -->
+<section class="seat-section">
+  <div class="seat-bg-num">8</div>
+  <div class="section-number fade-in">03 — Membership</div>
+  <h2 class="seat-heading fade-in">
+    Precisely eight.<br>
+    <em style="color:var(--gold)">Never nine.</em>
+  </h2>
+  <p class="seat-subtext fade-in">
+    The table seats exactly eight. This is not a design choice —
+    it is a commitment. Small enough that every voice is heard.
+    Large enough for the unexpected connection.
+  </p>
+  <div class="seats-visual fade-in">
+    <div class="seat-dot filled"></div>
+    <div class="seat-dot filled"></div>
+    <div class="seat-dot filled"></div>
+    <div class="seat-dot filled"></div>
+    <div class="seat-dot filled"></div>
+    <div class="seat-dot filled"></div>
+    <div class="seat-dot"></div>
+    <div class="seat-dot"></div>
+  </div>
+  <p style="font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.3); margin-bottom:2.5rem;">
+    6 of 8 seats filled for the upcoming season
+  </p>
+  <a href="#apply" class="btn-primary fade-in">Request Your Seat</a>
+</section>
+
+<!-- APPLICATION -->
+<section class="application" id="apply">
+  <div>
+    <div class="section-number">04 — Apply</div>
+    <h2 class="section-heading">
+      Request an<br><em>invitation.</em>
+    </h2>
+    <p class="body-text">
+      Membership is by application. We review each submission personally
+      and respond within seven days. There is no waiting list —
+      only the next available season.
+    </p>
+
+    <form id="memberForm" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="fname">First Name</label>
+          <input type="text" id="fname" class="form-input" placeholder="Araya" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="lname">Last Name</label>
+          <input type="text" id="lname" class="form-input" placeholder="Prasert" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" id="email" class="form-input" placeholder="araya@example.com" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="city">City</label>
+        <input type="text" id="city" class="form-input" placeholder="Bangkok" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="why">Why Chalerm?</label>
+        <textarea id="why" class="form-textarea" placeholder="What draws you to this kind of gathering..." rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="diet">Dietary Requirements</label>
+        <select id="diet" class="form-select">
+          <option value="">No restrictions</option>
+          <option>Vegetarian</option>
+          <option>Vegan</option>
+          <option>Gluten-free</option>
+          <option>Other — please note in message</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%; margin-top:0.5rem;">
+        Submit Application
+      </button>
+      <p class="form-note">
+        Your application is reviewed personally. We do not share your
+        information with third parties. A reply arrives within seven days.
+      </p>
+    </form>
+  </div>
+
+  <div class="application-aside">
+    <img src="https://picsum.photos/seed/thaitable/600/300"
+         alt="The table" class="aside-img fade-in" />
+
+    <div class="aside-block fade-in">
+      <div class="aside-block-label">Frequency</div>
+      <div class="aside-block-val">Twice monthly</div>
+      <div class="aside-block-sub">
+        Evenings are held on the second and fourth Friday of each month.
+        Members select sessions at the start of each quarter.
+      </div>
+    </div>
+
+    <div class="aside-block fade-in">
+      <div class="aside-block-label">What's Included</div>
+      <div class="aside-block-val">Full evening</div>
+      <div class="aside-block-sub">
+        Eight courses, paired beverages, printed menu card, and an introduction
+        to the featured chef. Gratuity included.
+      </div>
+    </div>
+
+    <div class="aside-block fade-in">
+      <div class="aside-block-label">Location</div>
+      <div class="aside-block-val">Disclosed</div>
+      <div class="aside-block-sub">
+        The address is shared with confirmed members 48 hours prior.
+        Venues rotate across private residences and studios.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Chalerm</div>
+  <p class="footer-copy">© 2024 Chalerm. All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+</footer>
+
+<!-- MODAL (success) -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="success-msg" id="successMsg" style="display:block;">
+      <div class="checkmark">◆</div>
+      <h3 style="font-size:1.4rem; font-weight:400; margin-bottom:0.75rem;">Application received.</h3>
+      <p>
+        Thank you for your interest in Chalerm. We review each
+        submission personally and will reply within seven days.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── Intersection Observer for fade-ins ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ─── Nav transparency on scroll ───
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.style.background = 'rgba(13,15,20,0.95)';
+    } else {
+      nav.style.background = 'linear-gradient(to bottom, rgba(13,15,20,0.85) 0%, transparent 100%)';
+    }
+  });
+
+  // ─── Form submission ───
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('memberForm').reset();
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ─── Seat dot hover interaction ───
+  const dots = document.querySelectorAll('.seat-dot');
+  dots.forEach((dot, i) => {
+    dot.addEventListener('mouseenter', () => {
+      dots.forEach((d, j) => {
+        d.style.background = j <= i ? 'var(--gold)' : 'transparent';
+      });
+    });
+    dot.addEventListener('mouseleave', () => {
+      dots.forEach((d, j) => {
+        d.style.background = j < 6 ? 'var(--gold)' : 'transparent';
+      });
+    });
+  });
+
+  // ─── Smooth scroll for anchors ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

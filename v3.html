@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anantara — Members Supper Club</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:     #0c0c0b;
+    --paper:   #f0e9dc;
+    --saffron: #d4891a;
+    --gold:    #c9a84c;
+    --smoke:   #2a2620;
+    --dust:    #8a7f72;
+    --blush:   #c97b5a;
+    --cream:   #faf6f0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    overflow-x: hidden;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .label {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .display {
+    font-size: clamp(3.5rem, 8vw, 9rem);
+    line-height: 0.92;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.02em;
+  }
+
+  .headline {
+    font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  .subhead {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    color: var(--dust);
+  }
+
+  .body-text {
+    font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+    line-height: 1.75;
+    color: #c8bfb2;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    mix-blend-mode: normal;
+  }
+
+  nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(12,12,11,0.9) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .nav-logo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .nav-logo span:first-child {
+    font-size: 1.15rem;
+    font-style: italic;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-logo span:last-child {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    position: relative;
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    position: relative;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    border: none;
+    padding: 0.65rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--saffron); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 680px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5rem 4rem 5rem 5rem;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-title em {
+    display: block;
+    color: var(--gold);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .hero-meta-value {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.55) saturate(0.8);
+    transition: transform 8s ease;
+  }
+
+  .hero:hover .hero-right img { transform: scale(1.04); }
+
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--ink) 0%, transparent 40%);
+  }
+
+  /* vertical rule */
+  .hero-vr {
+    position: absolute;
+    top: 12%;
+    bottom: 12%;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4), transparent);
+    z-index: 3;
+  }
+
+  /* scroll cue */
+  .scroll-cue {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: bob 2.5s ease-in-out infinite;
+  }
+
+  .scroll-cue span {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dust);
+    writing-mode: vertical-rl;
+  }
+
+  .scroll-cue::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* ── RULE DIVIDER ── */
+  .rule {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 5rem;
+  }
+
+  .rule::before, .rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,168,76,0.25);
+  }
+
+  .rule-diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── MANIFESTO ── */
+  .manifesto {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 0;
+    padding: 8rem 5rem;
+    background: var(--ink);
+  }
+
+  .manifesto-left {
+    padding-right: 5rem;
+    border-right: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .manifesto-number {
+    font-size: 8rem;
+    font-style: italic;
+    color: rgba(201,168,76,0.12);
+    line-height: 1;
+    margin-bottom: -1.5rem;
+  }
+
+  .manifesto-pull {
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    line-height: 1.25;
+    font-style: italic;
+    color: var(--paper);
+    margin-bottom: 2rem;
+  }
+
+  .manifesto-pull em { color: var(--gold); font-style: normal; }
+
+  .manifesto-right {
+    padding-left: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* ── EIGHT SEATS ── */
+  .eight-seats {
+    background: var(--smoke);
+    padding: 7rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .eight-seats::before {
+    content: '8';
+    position: absolute;
+    right: -0.1em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40vw;
+    font-style: italic;
+    color: rgba(12,12,11,0.6);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .eight-seats-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .seats-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .seat-card {
+    border-left: 1px solid rgba(201,168,76,0.15);
+    padding: 2rem 1.5rem;
+    transition: background 0.3s;
+  }
+
+  .seat-card:last-child { border-right: 1px solid rgba(201,168,76,0.15); }
+
+  .seat-card:hover { background: rgba(201,168,76,0.05); }
+
+  .seat-num {
+    font-size: 2rem;
+    font-style: italic;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .seat-name {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dust);
+    line-height: 1.6;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience {
+    padding: 8rem 0;
+    background: var(--ink);
+  }
+
+  .experience-header {
+    padding: 0 5rem 5rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .experience-panels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .exp-panel {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+
+  .exp-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4) saturate(0.7);
+    transition: filter 0.5s, transform 0.6s;
+  }
+
+  .exp-panel:hover img {
+    filter: brightness(0.55) saturate(0.9);
+    transform: scale(1.04);
+  }
+
+  .exp-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.5rem;
+    background: linear-gradient(to top, rgba(12,12,11,0.85) 0%, transparent 55%);
+  }
+
+  .exp-index {
+    font-size: 4rem;
+    font-style: italic;
+    color: rgba(201,168,76,0.35);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-title {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--paper);
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-desc {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    color: var(--dust);
+    max-width: 28ch;
+  }
+
+  .exp-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .exp-panel:hover .exp-line { transform: scaleX(1); }
+
+  /* ── MENU PHILOSOPHY ── */
+  .menu-section {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 8rem 5rem;
+    overflow: hidden;
+  }
+
+  .menu-section .label { color: var(--saffron); }
+  .menu-section .body-text { color: #5a5047; }
+
+  .menu-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-bottom: 5rem;
+    align-items: end;
+  }
+
+  .menu-header .headline { color: var(--ink); }
+
+  .menu-scroll-track {
+    display: flex;
+    gap: 2px;
+    margin: 0 -5rem;
+    padding: 0 5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+
+  .menu-scroll-track::-webkit-scrollbar { display: none; }
+  .menu-scroll-track:active { cursor: grabbing; }
+
+  .course-card {
+    flex-shrink: 0;
+    width: 300px;
+    background: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .course-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
+    filter: saturate(0.85);
+  }
+
+  .course-card:hover .course-img { transform: scale(1.05); }
+
+  .course-body {
+    padding: 1.5rem;
+    border-top: 2px solid var(--gold);
+  }
+
+  .course-num {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .course-name {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .course-thai {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: #9a8f85;
+    margin-bottom: 0.75rem;
+  }
+
+  .course-desc {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: #6a6057;
+  }
+
+  /* ── QUOTE BAND ── */
+  .quote-band {
+    background: var(--saffron);
+    color: var(--ink);
+    padding: 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-band::before {
+    content: '\201C';
+    position: absolute;
+    top: -0.3em;
+    left: 0.1em;
+    font-size: 20rem;
+    color: rgba(12,12,11,0.08);
+    line-height: 1;
+    font-family: Georgia, serif;
+    pointer-events: none;
+  }
+
+  .quote-text {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 42rem;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-attr {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(12,12,11,0.6);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── MEMBERSHIP ── */
+  .membership {
+    background: var(--smoke);
+    padding: 8rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7rem;
+    align-items: start;
+  }
+
+  .membership-left {}
+
+  .membership-left .label { margin-bottom: 1.5rem; display: block; }
+
+  .membership-left .headline {
+    margin-bottom: 2rem;
+    color: var(--paper);
+  }
+
+  .membership-left .headline em { color: var(--gold); }
+
+  .perks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .perks li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    color: var(--dust);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .perks li::before {
+    content: '';
+    display: block;
+    width: 18px;
+    height: 1px;
+    background: var(--gold);
+    margin-top: 0.55em;
+    flex-shrink: 0;
+  }
+
+  /* FORM */
+  .form-wrap {
+    background: rgba(12,12,11,0.5);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2.5rem;
+  }
+
+  .form-title {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 0.4rem;
+    color: var(--paper);
+  }
+
+  .form-sub {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--dust);
+    margin-bottom: 2rem;
+  }
+
+  .field {
+    margin-bottom: 1.2rem;
+  }
+
+  .field label {
+    display: block;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--paper);
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  .field select option { background: var(--smoke); }
+
+  .form-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s, letter-spacing 0.2s;
+  }
+
+  .submit-btn:hover {
+    background: var(--saffron);
+    letter-spacing: 0.3em;
+  }
+
+  .form-note {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: rgba(138,127,114,0.6);
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 3rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-brand {
+    font-size: 1.05rem;
+    font-style: italic;
+    letter-spacing: 0.06em;
+  }
+
+  .footer-brand span {
+    display: block;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-style: normal;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dust);
+    margin-top: 3px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dust);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-copy {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(138,127,114,0.5);
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    z-index: 999;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── REVEAL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 8rem 2rem 4rem; }
+
+    .manifesto { grid-template-columns: 1fr; padding: 5rem 2rem; }
+    .manifesto-left { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.2); padding-right: 0; padding-bottom: 3rem; margin-bottom: 3rem; }
+    .manifesto-right { padding-left: 0; }
+
+    .eight-seats { padding: 5rem 2rem; }
+    .eight-seats-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    .seats-grid { grid-template-columns: repeat(4, 1fr); }
+
+    .experience-panels { grid-template-columns: 1fr; }
+    .exp-panel { aspect-ratio: 16/9; }
+    .experience-header { padding: 0 2rem 3rem; flex-direction: column; gap: 1rem; align-items: flex-start; }
+
+    .menu-section { padding: 5rem 2rem; }
+    .menu-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .menu-scroll-track { margin: 0 -2rem; padding: 0 2rem; }
+
+    .membership { grid-template-columns: 1fr; padding: 5rem 2rem; gap: 4rem; }
+    .form-cols { grid-template-columns: 1fr; }
+
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem; }
+
+    .rule { padding: 0 2rem; }
+    .quote-band { padding: 4rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span>Anantara</span>
+    <span>Members Supper Club</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#membership">Membership</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('membership').scrollIntoView({behavior:'smooth'})">
+    Request Invitation
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow reveal">
+      <span class="label">Bangkok · Est. 2019</span>
+    </div>
+    <div class="hero-title display reveal">
+      Where<br>
+      <em>eight</em><br>
+      gather.
+    </div>
+    <div class="hero-meta reveal">
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">8</span>
+        <span class="label">Seats Only</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">7</span>
+        <span class="label">Courses</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-value">Fri–Sat</span>
+        <span class="label">Sittings</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-vr"></div>
+  <div class="hero-right">
+    <img
+      src="https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=900&q=80"
+      alt="Thai fine dining"
+      loading="eager"
+    >
+  </div>
+  <div class="scroll-cue"><span>Scroll</span></div>
+</section>
+
+<!-- RULE -->
+<div class="rule" style="padding-top:3rem;padding-bottom:3rem;">
+  <div class="rule-diamond"></div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="about">
+  <div class="manifesto-left reveal">
+    <div class="manifesto-number">I.</div>
+    <p class="manifesto-pull">
+      A table for <em>eight</em> is not a restaurant.<br>
+      It is a conversation.
+    </p>
+    <span class="label">Our Philosophy</span>
+  </div>
+  <div class="manifesto-right reveal">
+    <p class="body-text">
+      Anantara began as an obsession: could a single table, set in a quiet Bangkok townhouse,
+      deliver the full depth of Thai culinary heritage — not as museum piece, but as living art?
+    </p>
+    <p class="body-text">
+      Every Friday and Saturday evening, eight members sit together at one long table.
+      The kitchen is open. The chef narrates each course. There are no menus — only the
+      market that morning, the seasons of the land, and the generations of technique behind
+      every hand that touches your plate.
+    </p>
+    <p class="body-text">
+      Membership is by invitation only, renewed annually. We keep the circle intentionally small
+      because intimacy cannot be scaled.
+    </p>
+  </div>
+</section>
+
+<!-- EIGHT SEATS -->
+<section class="eight-seats">
+  <div class="eight-seats-header">
+    <div>
+      <span class="label" style="display:block;margin-bottom:1rem;">The Table</span>
+      <h2 class="headline reveal">Eight seats.<br>One long table.</h2>
+    </div>
+    <p class="subhead reveal" style="max-width:28ch;text-align:right;">Each chair is numbered,<br>each guest known by name.</p>
+  </div>
+  <div class="seats-grid">
+    <div class="seat-card reveal">
+      <div class="seat-num">01</div>
+      <div class="seat-name">The<br>Host's<br>Chair</div>
+    </div>
+    <div class="seat-card reveal">
+      <div class="seat-num">02</div>
+      <div class="seat-name">The<br>Sommelier's<br>Right</div>
+    </div>
+    <div class="seat-card reveal">
+      <div class="seat-num">03</div>
+      <div class="seat-name">The<br>Herb<br>Garden View</div>
+    </div>
+    <div class="seat-card reveal">
+      <div class="seat-num">04</div>
+      <div class="seat-name">The<br>Kitchen<br>Window</div>
+    </div>
+    <div class="seat-card reveal">
+      <div class="seat-num">05</div>
+      <div class="seat-name">The<br>Courtyard<br>Side</div>
+    </div>
+    <div class="seat-card reveal">
+      <div class="seat-num">06</div>
+      <div class="seat-name">The<br>Lantern<br>Seat</div>
+    </div>
+    <div class="seat-card reveal">
+      <div class="seat-num">07</div>
+      <div class="seat-name">The<br>Eldest<br>Place</div>
+    </div>
+    <div class="seat-card reveal">
+      <div class="seat-num">08</div>
+      <div class="seat-name">The<br>Final<br>Chair</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="experience-header">
+    <div>
+      <span class="label" style="display:block;margin-bottom:1rem;">The Evening</span>
+      <h2 class="headline reveal">How a night<br>unfolds.</h2>
+    </div>
+    <p class="subhead reveal" style="max-width:24ch;">From arrival to the final digestif — every detail considered.</p>
+  </div>
+  <div class="experience-panels">
+    <div class="exp-panel">
+      <div class="exp-line"></div>
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Welcome drinks" loading="lazy">
+      <div class="exp-overlay">
+        <div class="exp-index">01</div>
+        <div class="exp-title">The Arrival</div>
+        <div class="exp-desc">Welcome drinks in the courtyard garden. Thai herbal tonics, cold-pressed coconut, and a first conversation with your fellow guests.</div>
+      </div>
+    </div>
+    <div class="exp-panel">
+      <div class="exp-line"></div>
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Seven courses" loading="lazy">
+      <div class="exp-overlay">
+        <div class="exp-index">02</div>
+        <div class="exp-title">The Seven Courses</div>
+        <div class="exp-desc">Chef Lalana narrates each dish — its provenance, its technique, its memory. The table is a classroom and a celebration at once.</div>
+      </div>
+    </div>
+    <div class="exp-panel">
+      <div class="exp-line"></div>
+      <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=600&q=80" alt="Night cap" loading="lazy">
+      <div class="exp-overlay">
+        <div class="exp-index">03</div>
+        <div class="exp-title">The Long Table</div>
+        <div class="exp-desc">No rush. The table is yours until the candles burn low. Rare Thai whisky, lemongrass tisane, and the kind of evening that resists a scheduled end.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU PHILOSOPHY -->
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <div>
+      <span class="label" style="display:block;margin-bottom:1rem;">The Menu</span>
+      <h2 class="headline reveal">Seven courses,<br>written in Thai.</h2>
+    </div>
+    <p class="body-text reveal" style="max-width:38ch;">
+      No menu card is placed at your seat. What arrives is dictated by the week's market, the chef's memory, and the seasons of the Central Plains. What follows is a glimpse into the language of a typical evening.
+    </p>
+  </div>
+
+  <div class="menu-scroll-track" id="menuTrack">
+    <div class="course-card">
+      <img class="course-img" src="https://picsum.photos/seed/thaifoodappetizer/300/200" alt="Amuse bouche">
+      <div class="course-body">
+        <div class="course-num">Course 01 · Amuse</div>
+        <div class="course-name">Miang Kham</div>
+        <div class="course-thai">เมี่ยงคำ</div>
+        <div class="course-desc">Wild betel leaf, toasted coconut, dried shrimp, ginger, lime, and a tamarind glaze that holds twelve memories in a single bite.</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img class="course-img" src="https://picsum.photos/seed/thaisoup/300/200" alt="Soup course">
+      <div class="course-body">
+        <div class="course-num">Course 02 · Soup</div>
+        <div class="course-name">Tom Kha Krai</div>
+        <div class="course-thai">ต้มข่าไก่</div>
+        <div class="course-desc">Galangal-steeped coconut broth with young lemongrass, kaffir lime, and heritage chicken from Chiang Rai. Six-hour stock. Zero shortcuts.</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img class="course-img" src="https://picsum.photos/seed/thaisalad/300/200" alt="Salad">
+      <div class="course-body">
+        <div class="course-num">Course 03 · Cold</div>
+        <div class="course-name">Yam Mamuang</div>
+        <div class="course-thai">ยำมะม่วง</div>
+        <div class="course-desc">Green mango salad with crispy shallots, chilli, fish sauce caramel, and a snow of smoked dried fish from the Gulf.</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img class="course-img" src="https://picsum.photos/seed/thaicurry/300/200" alt="Curry">
+      <div class="course-body">
+        <div class="course-num">Course 04 · Curry</div>
+        <div class="course-name">Gaeng Kiao Wan</div>
+        <div class="course-thai">แกงเขียวหวาน</div>
+        <div class="course-desc">Slow-simmered green curry with hand-pounded paste, eggplant blossoms, and kra pao leaves harvested from the kitchen garden at dawn.</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img class="course-img" src="https://picsum.photos/seed/thaifish/300/200" alt="Fish">
+      <div class="course-body">
+        <div class="course-num">Course 05 · Sea</div>
+        <div class="course-name">Pla Neung Manao</div>
+        <div class="course-thai">ปลานึ่งมะนาว</div>
+        <div class="course-desc">Whole barramundi, steamed over banana leaf with lime, garlic, and coriander root. Served with a broth so clear it appears invisible.</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img class="course-img" src="https://picsum.photos/seed/thairice/300/200" alt="Rice">
+      <div class="course-body">
+        <div class="course-num">Course 06 · Earth</div>
+        <div class="course-name">Khao Pad Sapparod</div>
+        <div class="course-thai">ข้าวผัดสับปะรด</div>
+        <div class="course-desc">Jasmine rice, fried in aged lard, with fresh pineapple, cashew, and turmeric-stained egg. A course that insists on its own unpretentiousness.</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img class="course-img" src="https://picsum.photos/seed/thaidessert/300/200" alt="Dessert">
+      <div class="course-body">
+        <div class="course-num">Course 07 · Sweet</div>
+        <div class="course-name">Khao Niao Mamuang</div>
+        <div class="course-thai">ข้าวเหนียวมะม่วง</div>
+        <div class="course-desc">Glutinous rice, pressed and warmed, with Mahachanok mango and a salted coconut cream that arrives in a tiny brass cup.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BAND -->
+<div class="quote-band">
+  <p class="quote-text">
+    "To cook Thai food properly is to understand that every ingredient carries a conversation
+    going back five hundred years. I am only the most recent voice."
+  </p>
+  <p class="quote-attr">Chef Lalana Sukhum · Head of Kitchen</p>
+</div>
+
+<!-- MEMBERSHIP -->
+<section class="membership" id="membership">
+  <div class="membership-left">
+    <span class="label">Annual Membership</span>
+    <h2 class="headline reveal">Join the<br><em>eight</em>.</h2>
+    <p class="body-text" style="margin-top:1rem;">
+      Membership grants twelve monthly seatings, priority reservation, access to the private wine cellar,
+      and invitations to off-season chef's table events. Applications are reviewed quarterly.
+    </p>
+    <ul class="perks reveal">
+      <li>Twelve monthly dinners (Friday or Saturday, your choice)</li>
+      <li>Private sommelier selections from our cellar — Thai natural wines, imported rarities</li>
+      <li>Quarterly off-menu tastings — new dishes before they ever appear</li>
+      <li>Access to the recipe archive: handwritten cards from three generations</li>
+      <li>One transferable guest invite per quarter</li>
+      <li>Invitation to the annual garden harvest and cook-together</li>
+    </ul>
+  </div>
+  <div class="form-wrap reveal">
+    <p class="form-title">Request an Invitation</p>
+    <p class="form-sub">We review applications on the first of each month.</p>
+    <form id="inviteForm" onsubmit="handleSubmit(event)">
+      <div class="form-cols">
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" placeholder="Somchai" required>
+        </div>
+        <div class="field">
+          <label>Family Name</label>
+          <input type="text" placeholder="Wongkasem" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label>Preferred Day</label>
+        <select>
+          <option>Friday evenings</option>
+          <option>Saturday evenings</option>
+          <option>Either — flexible</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Referred by a member?</label>
+        <input type="text" placeholder="Member's name (optional)">
+      </div>
+      <div class="field">
+        <label>Why do you wish to join?</label>
+        <textarea placeholder="A few words — we read every note carefully."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Submit Application</button>
+      <p class="form-note">Submissions are confidential. We will respond within 14 days.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    Anantara
+    <span>Members Supper Club · Bangkok</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#membership">Membership</a></li>
+  </ul>
+  <span class="footer-copy">&copy; 2026 Anantara. All rights reserved.</span>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Application received — we'll be in touch.</div>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // ── DRAG SCROLL ──
+  const track = document.getElementById('menuTrack');
+  let isDragging = false, startX, scrollLeft;
+
+  track.addEventListener('mousedown', e => {
+    isDragging = true;
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    track.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    track.style.userSelect = '';
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX);
+  });
+
+  // Touch drag
+  track.addEventListener('touchstart', e => {
+    startX = e.touches[0].pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  }, { passive: true });
+
+  track.addEventListener('touchmove', e => {
+    const x = e.touches[0].pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX);
+  }, { passive: true });
+
+  // ── FORM SUBMIT ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    e.target.reset();
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // ── NAV SCROLL TINT ──
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.background = window.scrollY > 60
+      ? 'rgba(12,12,11,0.92)'
+      : 'transparent';
+    nav.style.transition = 'background 0.3s';
+    nav.style.backdropFilter = window.scrollY > 60 ? 'blur(10px)' : 'none';
+  }, { passive: true });
+
+  // ── SEAT HOVER RIPPLE ──
+  document.querySelectorAll('.seat-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transition = 'background 0.3s';
+    });
+  });
+</script>
+</body>
+</html>
